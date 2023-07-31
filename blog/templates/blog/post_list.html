@@ -10,11 +10,17 @@
     </div>
     <br>
 
-    <div>
-        <p>published: 2023/07/31, 14:00</p>
-        <b><a href="">1</a></b>
-        <p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-    </div>
+
+    {% for post in posts %}
+        <article>
+
+            <br>
+            <b><a href="">{{ post.title }}</a></b>
+            <time>{{ post.published_date }}</time>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </article>
+    {% endfor %}
+
 
 
 </body>
