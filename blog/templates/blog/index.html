@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>日志信息</title>
+    <img src="../static/images/carrier_logo_150.png" width="80" height="auto" align="right">
+    {% load static %}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="{% static 'blog.css' %}">
+
+
+    <script>
+        function getDate(){
+            var date = new Date();
+            var d1=date.toLocaleString();
+            document.getElementById("datetime").innerHTML = "Current time (Asia/Shanghai):"+d1;
+        }
+        setInterval("getDate();",1000);
+    </script>
+
+    </head>
+
+<body onload=getDate()>
+
+
+    <div class="page-header" id="datetime">
+        <h5>Asia/Shanghai</h5>
+    </div>
+    <div id="datetime"></div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A5j0zidDv3y1zNLNRFDIVGXSOOsUdoXX"></script>
+    <div style="width:1200px;height:480px;border:#ccc solid 1px;font-size:12px" id="map"></div>
+
+
+    {% if all_posts_list %}
+        <ul>
+            {% for post in all_posts_list %}
+                <li><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}
+                                                                {{ t }}
+                                                                {{ post.published_date }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No logs are available.</p>
+    {% endif %}
+
+
+</body>
+<script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap(){
+      createMap();//创建地图
+      setMapEvent();//设置地图事件
+      addMapControl();//向地图添加控件
+      addMapOverlay();//向地图添加覆盖物
+    }
+    function createMap(){
+      map = new BMap.Map("map");
+      map.centerAndZoom(new BMap.Point(106.558437,29.568996),5);
+    }
+    function setMapEvent(){
+      map.enableScrollWheelZoom();
+      map.enableDragging();
+    }
+    function addClickHandler(target,window){
+      target.addEventListener("click",function(){
+        target.openInfoWindow(window);
+      });
+    }
+    function addMapOverlay(){
+      var markers = [
+        {content:"上海市浦东新区申江路3239号",title:"开利中国研发中心",imageOffset: {width:0,height:3},position:{lat:31.249782,lng:121.632946}},
+        {content:"广州市天河区珠江西路15号珠江城大厦",title:"开利空调（广州）",imageOffset: {width:0,height:3},position:{lat:23.129969,lng:113.32945}},
+        {content:"上北京市东城区建国门南大街7号北京万豪中心A座7层705室",title:"开利中国总部（北京）",imageOffset: {width:0,height:3},position:{lat:39.910379,lng:116.440642}},
+        {content:"重庆市渝中区民族路188号环球金融中心19-10",title:"开利中国总部（重庆）",imageOffset: {width:0,height:3},position:{lat:29.565201,lng:106.584247}}
+      ];
+      for(var index = 0; index < markers.length; index++ ){
+        var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
+        var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+          imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)
+        })});
+        var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
+        var opts = {
+          width: 200,
+          title: markers[index].title,
+          enableMessage: false
+        };
+        var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
+        marker.setLabel(label);
+        addClickHandler(marker,infoWindow);
+        map.addOverlay(marker);
+      };
+    }
+    //向地图添加控件
+    function addMapControl(){
+      var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+      scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+      map.addControl(scaleControl);
+      var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+      map.addControl(navControl);
+      var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+      map.addControl(overviewControl);
+    }
+    var map;
+      initMap();
+  </script>
+</html>

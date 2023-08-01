@@ -1,43 +1,32 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Blog detail</title>
 
-    <title>Logs</title>
     {% load static %}
-
-    <!--<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">-->
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
     <link rel="stylesheet" href="{% static 'css/../../static/blog.css' %}">
-
 </head>
 <body>
-    <div class="page-header">
-        <h4 align="center">Here's the list of all blogs.</h4>
-    </div>
+    {#  {% extends 'blog/base.html' %} #}
 
-
-
-    <br>
     {% block content %}
-        {% for post in posts %}
-            <div class="post">
-                <b><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></b>
+
+        <div class="post">
+            {% if post.published_date %}
+                <b><a href="">{{ post.title }}</a></b>
 
                 <div class="date">
                     <time>{{ post.published_date }}</time>
                 </div>
-                <p>{{ post.text|linebreaksbr }}</p>
-            </div>
-        {% endfor %}
+            {% endif %}
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+
     {% endblock %}
-
-
-
 </body>
 </html>
