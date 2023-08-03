@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<meta name="viewport">
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>日志信息</title>
-    {% load static %}
-    <div class="page-header-img">
-    <img src="../static/images/carrier_logo_150.png" width="80" height="auto"></div>
+    <title>infobox测试</title>
+    <img src="../static/images/carrier_logo_150.png" width="80" height="auto">
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="{% static 'blog/infoboxtest.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="../../static/blog/infoboxtest.css"/>
 
     <script>
+
         function getDate(){
             var date = new Date();
             var d1=date.toLocaleString();
@@ -22,7 +18,6 @@
         }
         setInterval("getDate();",1000);
     </script>
-
 
     </head>
 
@@ -33,29 +28,11 @@
 
         <h5>Asia/Shanghai</h5>
     </div>
-    <div id="datetime"></div>
+    <!--<div id="datetime"></div>-->
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A5j0zidDv3y1zNLNRFDIVGXSOOsUdoXX"></script>
-    <div style="width:95%;height:85%" id="map"></div>
-    <!--;border:#ccc solid 1px;font-size:12px-->
+    <div style=width:1200px;height:500px; border:#ccc solid 1px;font-size:12px id="map"></div>
 
 
-    <br>
-    {% if all_posts_list %}
-        <ul>
-            {% for post in all_posts_list %}
-                <li><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}
-                                                                {{ t }}
-                                                                {{ post.published_date }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No logs are available.</p>
-    {% endif %}
-<br>
-<footer class="footer">
-    <p></p>
-    <em>Posted By: Jin Yue | More Info | Contact | Privacy</em>
-</footer>
 
 </body>
 <script type="text/javascript">
@@ -74,25 +51,21 @@
       map.enableScrollWheelZoom();
       map.enableDragging();
     }
+
     function addClickHandler(target,window){
       target.addEventListener("click",function (){
+          //console.log(this);}.bind(someString),);
           target.openInfoWindow(window);
+          //infoBox.open(target);
       });
     }
     function addMapOverlay(){
       var markers = [
-        {content:"上海市浦东新区申江路3239号<br>lat：31.249782 lng：121.632946" +
-                "<br>test1<br>test2<br>test3<br>test4",
+        {content:"上海市浦东新区申江路3239号<br>经度：31.249782 纬度：121.632946<br>Weather: 32°<br>test1:<br>test2:<br>test3:<br>test5:<br>test6:",
             title:"开利中国研发中心",imageOffset: {width:0,height:3},position:{lat:31.249782,lng:121.632946}},
-        {content:"广州市天河区珠江西路15号珠江城大厦"+
-            "<br>test1<br>test2<br>test3<br>test4",
-          title:"开利空调（广州）",imageOffset: {width:0,height:3},position:{lat:23.129969,lng:113.32945}},
-        {content:"上北京市东城区建国门南大街7号北京万豪中心A座7层705室"+
-            "<br>test1<br>test2<br>test3<br>test4",
-            title:"开利中国总部（北京）",imageOffset: {width:0,height:3},position:{lat:39.910379,lng:116.440642}},
-        {content:"重庆市渝中区民族路188号环球金融中心19-10"+
-                "<br>test1<br>test2<br>test3<br>test4",
-            title:"开利中国总部（重庆）",imageOffset: {width:0,height:3},position:{lat:29.565201,lng:106.584247}}
+        {content:"广州市天河区珠江西路15号珠江城大厦",title:"开利空调（广州）",imageOffset: {width:0,height:3},position:{lat:23.129969,lng:113.32945}},
+        {content:"上北京市东城区建国门南大街7号北京万豪中心A座7层705室",title:"开利中国总部（北京）",imageOffset: {width:0,height:3},position:{lat:39.910379,lng:116.440642}},
+        {content:"重庆市渝中区民族路188号环球金融中心19-10",title:"开利中国总部（重庆）",imageOffset: {width:0,height:3},position:{lat:29.565201,lng:106.584247}}
       ];
       for(var index = 0; index < markers.length; index++ ){
         var point = new BMap.Point(markers[index].position.lng,markers[index].position.lat);
@@ -103,14 +76,23 @@
         })});
         var label = new BMap.Label(markers[index].title,{offset: new BMap.Size(25,5)});
         var opts = {
-          width: 250,
-          height: 180,
+          width: 300,
+          height: 200,
           title: markers[index].title,
-          enableMessage: true,
+          enableAutoPan: true,
         };
         var infoWindow = new BMap.InfoWindow(markers[index].content,opts);
-
-
+        /*var infoBox = new BMapLib.InfoBox(map,markers[index],{
+            boxStyle:{
+                background:"#F8F8F8 no-repeat center top",
+                width:"250px",
+                height:"200px",
+            },
+            closeIconMargin:"12px 2px 0 0",
+            align:INFOBOX_AT_TOP,
+            enableAutoPan:true
+        });*/
+        //infoWindow.setContent();
         marker.setLabel(label);
         //infoBox.open(marker);
         addClickHandler(marker,infoWindow);
@@ -130,5 +112,4 @@
     var map;
       initMap();
   </script>
-
 </html>

@@ -1,0 +1,58 @@
+.page-header-img{
+        position: relative;
+        top:15px;
+        float: right;
+        margin: 5px;
+        right: 50px
+    }
+
+body,html{
+    padding-left: 15px;
+    height: 100%;
+    overflow: auto;
+    margin: 0;
+}
+
+
+.page-header {
+        position: relative;
+        margin-top: 0;
+        padding: 20px 15px 20px 40px;
+        align-self: center;
+    }
+.footer {
+    text-align:  center;
+    color: #828282;
+    font-family: sans-serif;
+    margin: 5px;
+    font-size: 12px;
+
+}
+
+#map{
+    padding-left: 150px;
+}
+
+.BMap_bubble_title{
+    color: black;
+    font-size: 14px;
+    text-align: left;
+    font-weight: bold;
+}
+.BMap_bubble_content{
+    width: 300px;
+    background: white;
+    font-size: 14px;
+    font-family: serif;
+}
+
+.BMap_pop .BMap_top{
+    background: white;
+    border: 1px;
+}
+
+.BMap_pop .BMap_bottom{
+    border: 0;
+}
+.BMap_pop .BMap_center {
+}
