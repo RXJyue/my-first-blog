@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>控制面板</title>
+    {% load static %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet"
+          href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/dist/css/AdminLTE.min.css">
+
+    <link rel="stylesheet" href="{% static 'blog/infoboxtest.css' %}">
+    <link rel="stylesheet" href="https://use.typekit.net/uaf1lhy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<div class="wrapper">
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                <div class="col-sm-3">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ user_count }}</h3>
+
+                            <p>用户数</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">更多信息<i class="fa fa-question-circle"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-sm-3">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{ task_count }}</h3>
+                            <p>机组数</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">更多信息<i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-sm-3">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ hardest_author }}</h3>
+
+                            <p>author1 posts</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">更多信息<i class="fa fa-question-circle"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-sm-3">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner">
+                            <h3>{{ task_count }}</h3>
+
+                            <p>任务数</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">更多信息<i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-sm-3">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3>{{ avg_len }}</h3>
+
+                            <p>Avg length</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-bag"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">更多信息<i class="fa fa-question-circle"></i></a>
+                    </div>
+                    <!--col -->
+                </div>
+                <div class="col-sm-3">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                    <!--<div class="small-box bg-info">-->
+                        <div class="inner">
+                            <h4>{{ latest_date }}</h4>
+                            <p>latest update</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">更多信息<i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=A5j0zidDv3y1zNLNRFDIVGXSOOsUdoXX"></script>
+    <div id="map"></div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    //创建和初始化地图函数：
+    function initMap() {
+        createMap();//创建地图
+        setMapEvent();//设置地图事件
+        addMapControl();//向地图添加控件
+        addMapOverlay();//向地图添加覆盖物
+        searchPoint();
+    }
+
+    function createMap() {
+        map = new BMap.Map("map");
+        map.centerAndZoom(new BMap.Point(106.558437, 29.568996), 5);
+    }
+
+    function setMapEvent() {
+        map.enableScrollWheelZoom();
+        map.enableDragging();
+    }
+
+    function addClickHandler(target, window) {
+        target.addEventListener("click", function () {
+            target.openInfoWindow(window);
+        });
+    }
+
+    function addMapOverlay() {
+        var markers = [
+            {
+                content: "上海市浦东新区申江路3239号<br>lat：31.249782 lng：121.632946" +
+                    "<br>test1<br>test2<br>test3<br>test4",
+                title: "开利中国研发中心",
+                imageOffset: {width: 0, height: 3},
+                position: {lat: 31.249782, lng: 121.632946}
+            },
+            {
+                content: "广州市天河区珠江西路15号珠江城大厦" +
+                    "<br>test1<br>test2<br>test3<br>test4",
+                title: "开利空调（广州）", imageOffset: {width: 0, height: 3}, position: {lat: 23.129969, lng: 113.32945}
+            },
+            {
+                content: "上北京市东城区建国门南大街7号北京万豪中心A座7层705室" +
+                    "<br>test1:<br>test2:<br>test3:<br>test4:",
+                title: "开利中国总部（北京）",
+                imageOffset: {width: 0, height: 3},
+                position: {lat: 39.910379, lng: 116.440642}
+            },
+            {
+                content: "重庆市渝中区民族路188号环球金融中心19-10" +
+                    "<br>test1<br>test2<br>test3<br>test4",
+                title: "开利中国总部（重庆）",
+                imageOffset: {width: 0, height: 3},
+                position: {lat: 29.565201, lng: 106.584247}
+            }
+        ];
+        for (var index = 0; index < markers.length; index++) {
+            var point = new BMap.Point(markers[index].position.lng, markers[index].position.lat);
+            var marker = new BMap.Marker(point, {
+                icon: new BMap.Icon("http://api.map.baidu.com/img/markers.png", new BMap.Size(25, 25), {
+                    offset: new BMap.Size(9, 25),
+                    /*imageOffset: new BMap.Size(markers[index].imageOffset.width,markers[index].imageOffset.height)*/
+                    imageOffset: new BMap.Size(0, 0 - 12 * 25)
+                })
+            });
+            var label = new BMap.Label(markers[index].title, {offset: new BMap.Size(25, 5)});
+            var opts = {
+                width: 250,
+                height: 180,
+                title: markers[index].title,
+                enableMessage: true,
+            };
+            var infoWindow = new BMap.InfoWindow(markers[index].content, opts);
+
+
+            marker.setLabel(label);
+            //infoBox.open(marker);
+            addClickHandler(marker, infoWindow);
+            map.addOverlay(marker);
+        }
+    }
+
+    //向地图添加控件
+    function addMapControl() {
+        var scaleControl = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+        scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+        map.addControl(scaleControl);
+        var navControl = new BMap.NavigationControl({
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            type: BMAP_NAVIGATION_CONTROL_LARGE
+        });
+        map.addControl(navControl);
+        var overviewControl = new BMap.OverviewMapControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: true});
+        map.addControl(overviewControl);
+    }
+
+    //增加城市数据
+    function searchPoint() {
+        var cities = new Array("北京", "上海", "重庆", "广州");
+        for (city in cities) {
+            getWeather(cities[city]);
+        }
+    }
+
+    //城市天气预报
+    function getWeather(cityname) {
+        var xmlhttp = false;
+        //检查是否使用的是IE
+        try {
+            //如果JavaScript的版本大于5
+            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            //如果不是，则使用老版本的Active X 对象
+            try {
+                //如果使用的是IE浏览器
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                //否则肯定使用的是非IE浏览器
+                xmlhttp = false;
+            }
+        }
+        //如果使用的是非IE浏览器，则创建一个该对象的JavaScript实例
+        if (!xmlhttp && typeof XMLHttpRequest != "undefinded") {
+            xmlhttp = new XMLHttpRequest();
+        }
+
+        var serverPage = "weather/weather.php?a=" + cityname + "&tmp=" + Math.random();
+        xmlhttp.open("GET", encodeURI(serverPage));
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                searchPointByName(cityname, xmlhttp.responseText);
+            }
+        }
+        xmlhttp.send(null);
+    }
+
+    //根据城市名称搜索,并显示天气信息窗口：
+
+    var map;
+    initMap();
+</script>
+</html>

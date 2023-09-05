@@ -4,60 +4,85 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>日志信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=auto">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+
+    <title>Monitoring tool frontend</title>
     {% load static %}
     <div class="page-header-img">
     <img src="../static/images/carrier_logo_150.png" width="80" height="auto" alt=""></div>
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+-->
     <link rel="stylesheet" href="{% static 'blog/infoboxtest.css' %}">
+    <link rel="stylesheet" href="https://use.typekit.net/uaf1lhy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-    <script>
+    <!--<script>
         function getDate(){
             var date = new Date();
             var d1=date.toLocaleString();
             document.getElementById("datetime").innerHTML = "Current time (Asia/Shanghai):"+d1;
         }
         setInterval("getDate();",1000);
-    </script>
-
+    </script>-->
 
     </head>
 
-<body onload=getDate()>
-
-
+<body>
+<!--onload=getDate()>
     <div class="page-header" id="datetime">
 
         <h5>Asia/Shanghai</h5>
     </div>
-    <div id="datetime"></div>
+    <div id="datetime"></div>-->
+
+    <nav class="menu">
+        <ul class="links-list">
+            <li>
+                project by <a class="external-link" href="" target="_blank" rel="noopener noreferrer">Jin Yue</a>
+            </li>
+            <li>
+                powered by <a class="external-link" href="https://www.carrier.com/carrier/en/worldwide/" target="_blank" rel="noopener noreferrer">Carrier</a>
+            </li>
+            <li>
+                <a class="fa" href="mailto:yue.jin@carrier.com"></a>
+            </li>
+        </ul>
+    </nav>
+<br>
+
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=A5j0zidDv3y1zNLNRFDIVGXSOOsUdoXX"></script>
-    <div style="width:95%;height:85%" id="map"></div>
+    <br>
+    <div id="map"></div>
     <!--;border:#ccc solid 1px;font-size:12px-->
 
 
+
     <br>
-    {% if all_posts_list %}
-        <ul>
-            {% for post in all_posts_list %}
-                <li><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}
-                                                                {{ t }}
-                                                                {{ post.published_date }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No logs are available.</p>
-    {% endif %}
+    <div id="post-list">
+        {% if all_posts_list %}
+            <ul>
+                {% for post in all_posts_list %}
+                    <p><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}
+                                                                    {{ t }}
+                                                                    {{ post.published_date }}</a></p>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No logs are available.</p>
+        {% endif %}
+    </div>
 <br>
 <footer class="footer">
     <p></p>
-    <em>Posted By: Jin Yue | More Info | Contact | Privacy</em>
+    <em> More Info | Contact | Privacy</em>
 </footer>
 
 </body>
+
 <script type="text/javascript">
     //创建和初始化地图函数：
     function initMap(){

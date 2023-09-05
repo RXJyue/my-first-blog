@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -27,10 +26,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'simpleui',
     'blog.apps.BlogConfig',
     "polls.apps.PollsConfig",
     'django.contrib.admin',
@@ -39,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'widget_tweaks',
+    # 'django_tables',
+    # 'django_filters',
+    # 'blog',
+
+    # 'file_upload',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +76,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -81,7 +85,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -101,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -115,11 +117,32 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_REDIRECT_URL = '/'
+
+# MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+# MEDIA_URL = '/media'
+
+# SIMPLEUI_LOGO = 'https://th.bing.com/th/id/R2411a2b340731d67dfa0d84503e915e3?rik=zmYce%2fLys72JVQ&pid=ImgRaw'
+SIMPLEUI_LOGO = "https://upload.wikimedia.org/wikipedia/commons/8/8f/Logo_of_the_Carrier_Corporation.svg"
+SIMPLEUI_HOME_INFO = False
+SIMPLEUI_ANALYSIS = False
+#SIMPLEUI_DEFAULT_THEME = 'admin.lte.css'
+
+
+# 隐藏首页的快捷操作和最近动作
+SIMPLEUI_HOME_QUICK = False
+SIMPLEUI_HOME_ACTION = False
+
+# 修改左侧菜单首页设置
+SIMPLEUI_HOME_PAGE = '/blog/dashboard'  # 指向页面
+SIMPLEUI_HOME_TITLE = '控制面板' # 首页标题
+SIMPLEUI_HOME_ICON = 'fa fa-tachometer' # 首页图标
+
+# 设置右上角Home图标跳转链接，会以另外一个窗口打开
+#SIMPLEUI_INDEX = 'https://www.baidu.com'
